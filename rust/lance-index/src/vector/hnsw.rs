@@ -146,6 +146,7 @@ impl<T: Float, S: VectorStorage<T>> HNSW<T, S> {
             // Unvisited neighbors
             let neighbors = self.neighbors(c.node.id, layer).unwrap();
 
+            // TODO: make this loop parallel?
             for n in neighbors {
                 if visited.contains(n) {
                     continue;
