@@ -54,6 +54,9 @@ pub struct HNSW<T: Float, S: VectorStorage<T>> {
 
     nodes: Vec<GraphNode>,
 
+    /// Entry point index
+    entry: u32,
+
     dist_fn: fn(&[T], &[T]) -> f32,
 }
 
@@ -172,6 +175,12 @@ impl<T: Float, S: VectorStorage<T>> HNSW<T, S> {
             }
         }
         results
+    }
+
+    fn search_neighbors_simple(&self, candidates: &mut BTreeSet<NodeWithDist>, m: usize) {
+        while candidates.len() > m {
+            candidates.pop_last();
+        }
     }
 }
 

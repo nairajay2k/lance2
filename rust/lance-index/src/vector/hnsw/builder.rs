@@ -18,17 +18,51 @@ use crate::vector::graph::InMemoryVectorStorage;
 
 use super::HNSW;
 
+struct HnswBuilderNode {
+    id: u32,
+    neighbors: Vec<u32>,
+}
+
 /// HNSW Builder
 pub struct HNSWBUilder {
-    m_l: f32,
-    l_max: u8,
+    /// max level of
+    max_level: u16,
 
     /// max number of connections ifor each element per layers.
     m_max: usize,
+
+    /// Size of the dynamic list for the candidates
     ef_construction: usize,
 }
 
 impl HNSWBUilder {
+    pub fn new() -> Self {
+        Self {
+            max_level: 8,
+            m_max: 16,
+            ef_construction: 100,
+        }
+    }
+
+    /// The maximum level of the graph.
+    pub fn max_level(mut self, max_level: u16) -> Self {
+        self.max_level = max_level;
+        self
+    }
+
+    /// The maximum number of connections for each node per layer.
+    pub fn max_num_edges(mut self, m_max: usize) -> Self {
+        self.m_max = m_max;
+        self
+    }
+
+    /// Number of candidates to be considered when searching for the nearest neighbors
+    /// during the construction of the graph.
+    pub fn ef_construction(mut self, ef_construction: usize) -> Self {
+        self.ef_construction = ef_construction;
+        self
+    }
+
     /// Build a HNSW graph.
     pub fn build() -> HNSW<f32, InMemoryVectorStorage<Float32Type>> {
         unimplemented!()
@@ -36,6 +70,18 @@ impl HNSWBUilder {
 
     /// Assign random level to a new node
     fn random_level(&self) -> u16 {
+        unimplemented!()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::vector::hnsw::builder::HNSWBUilder;
+
+    #[test]
+    fn test_hnsw_builder() {
+        let builder = HNSWBUilder::new().max_level(8);
+
         unimplemented!()
     }
 }
